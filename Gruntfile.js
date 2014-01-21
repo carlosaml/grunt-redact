@@ -15,8 +15,8 @@ module.exports = function(grunt) {
     jshint: {
       all: [
         'Gruntfile.js',
-        'tasks/*.js',
-        'test/*.js',
+        'tasks/**/*.js',
+        'test/**/*.js'
       ],
       options: {
         jshintrc: '.jshintrc',
@@ -28,27 +28,6 @@ module.exports = function(grunt) {
       tests: ['tmp'],
     },
 
-    // Configuration to be run (and then tested).
-    toggles: {
-        options: { }
-//      default_options: {
-//        options: {
-//        },
-//        files: {
-//          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-//        },
-//      },
-//      custom_options: {
-//        options: {
-//          separator: ': ',
-//          punctuation: ' !!!',
-//        },
-//        files: {
-//          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-//        },
-//      },
-    },
-
     karma: {
         unit: {
             configFile: 'test/config/karma.conf.js',
@@ -56,11 +35,10 @@ module.exports = function(grunt) {
         }
     },
 
-//    // Unit tests.
-//    nodeunit: {
-//      tests: ['test/*_test.js'],
-//    },
-
+    // Configuration to be run (and then tested).
+    toggles: {
+        options: { }
+    },
   });
 
   // Actually load this plugin's task(s).
@@ -69,15 +47,13 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  
   grunt.loadNpmTasks('grunt-karma');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'toggles', 'karma:unit']);
+  grunt.registerTask('test', ['clean', 'jshint', 'toggles', 'karma:unit']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['test']);
 
 };
