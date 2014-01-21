@@ -8,7 +8,9 @@ module.exports = function(grunt) {
 
     grunt.log.writeln('Looking for files');
 
-    var toggle_states = grunt.file.readJSON(path.resolve('toggles.json'));
+    var options = this.options();
+
+    var toggle_states = grunt.file.readJSON(path.resolve(options.manifest_file));
     grunt.log.writeln(JSON.stringify(toggle_states));
 
     var allFiles = grunt.file.expand({cwd: 'src/main', filter: "isFile"}, '**/*');
