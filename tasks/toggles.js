@@ -4,15 +4,23 @@ var path = require('path');
 
 module.exports = function(grunt) {
 
-  grunt.registerMultiTask('purge', 'Remove code that is toggled off.', function() {
+  grunt.registerMultiTask('toggles', 'Remove code that is toggled off.', function() {
 
     grunt.log.writeln('Looking for files');
 
-    var files = grunt.file.expand({cwd: 'src', filter : "isFile"}, '**/*.css');
+    var toggle_states = grunt.file.readJSON(path.resolve('toggles.json'));
+    grunt.log.writeln(JSON.stringify(toggle_states));
 
-    files.forEach(function(file) {
-      var sourcefile = path.resolve('src', file);
-      var destfile = path.resolve('target', file);
+    var allFiles = grunt.file.expand({cwd: 'src/main', filter: "isFile"}, '**/*');
+    allFiles.forEach(function(file) {
+      grunt.file.copy(path.resolve('src/main', file), path.resolve('target/main', file));
+    });
+
+    var htmlFiles = grunt.file.expand({cwd: 'target/main', filter : "isFile"}, '**/*.html');
+
+    htmlFiles.forEach(function(file) {
+      var sourcefile = path.resolve('target/main', file);
+      var destfile = path.resolve('target/main', file);
 
       var body = grunt.file.read(sourcefile);
 
@@ -21,9 +29,13 @@ module.exports = function(grunt) {
       var newbody = body.replace(regex, function($0, $1)
       {
           //TODO: check here if specific toggle is on or off -- if code should stay, just return $0 
-          return '';
+          //return '';
           
-          //var m = $1.replace(/^\s+|\s+$/g, ''); // trim
+          var m = $1.replace(/^\s+|\s+$/g, ''); // trim
+          if (toggle_states[m]) {
+            return $0;
+          }
+          else return '';
           //if ( m.indexOf('!') == -1 )
           //{
           //    if ( context.NODE_ENV != m ) return ''; else return $0;
@@ -38,9 +50,10 @@ module.exports = function(grunt) {
       var newerbody = newbody.replace(new RegExp('^.*\/\/\\s*toggle_start:\\s*?([^\\n]+)\\n?', 'gm'), '').replace(new RegExp('\/\/\\s*toggle_end\\s*\\n?', 'gm'), '');
 
       if (body !== newerbody) {
-          grunt.log.writeln('Writing file to ' + destfile);
-          grunt.file.write(destfile, newbody);
+        grunt.log.writeln('Did stuff to ' + destfile);
+        grunt.file.write(destfile, newbody);
       }
+
     });
   });
 
