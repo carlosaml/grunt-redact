@@ -37,7 +37,9 @@ module.exports = function(grunt) {
           if (toggle_states[m]) {
             return $0;
           }
-          else return '';
+          else {
+            return '';
+          }
           //if ( m.indexOf('!') == -1 )
           //{
           //    if ( context.NODE_ENV != m ) return ''; else return $0;

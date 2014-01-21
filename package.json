@@ -29,8 +29,12 @@
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-clean": "~0.4.0",
-    "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt": "~0.4.2"
+    "grunt-contrib-jasmine": "~0.2.0",
+    "grunt": "~0.4.2",
+    "karma": "~0.11",
+    "karma-jasmine": "~0.1",
+    "grunt-karma": "~0.7.2",
+    "karma-phantomjs-launcher": "~0.1.1"
   },
   "peerDependencies": {
     "grunt": "~0.4.2"
