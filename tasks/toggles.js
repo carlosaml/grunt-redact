@@ -1,49 +1,46 @@
-/*
- * grunt-toggles
- * https://github.com/carlosaml/grunt-toggles
- *
- * Copyright (c) 2014 Carlos Lopes
- * Licensed under the MIT license.
- */
-
 'use strict';
+
+var path = require('path');
 
 module.exports = function(grunt) {
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+  grunt.registerMultiTask('purge', 'Remove code that is toggled off.', function() {
 
-  grunt.registerMultiTask('toggles', 'Grunt plugin to support feature toggle removal so that hidden code is not shown to clients.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
+    grunt.log.writeln('Looking for files');
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+    var files = grunt.file.expand({cwd: 'src', filter : "isFile"}, '**/*.css');
 
-      // Handle options.
-      src += options.punctuation;
+    files.forEach(function(file) {
+      var sourcefile = path.resolve('src', file);
+      var destfile = path.resolve('target', file);
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+      var body = grunt.file.read(sourcefile);
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
+      var regex = new RegExp('\/\/\\s*toggle_start:\\s*?([^\\n]+)[\\s\\S]*?\/\/\\s*toggle_end\\s*[\\s\\r\\n]?', 'g');
+
+      var newbody = body.replace(regex, function($0, $1)
+      {
+          //TODO: check here if specific toggle is on or off -- if code should stay, just return $0 
+          return '';
+          
+          //var m = $1.replace(/^\s+|\s+$/g, ''); // trim
+          //if ( m.indexOf('!') == -1 )
+          //{
+          //    if ( context.NODE_ENV != m ) return ''; else return $0;
+          //}
+          //else
+          //{
+          //    if (  '!'+context.NODE_ENV == m ) return ''; else return $0;
+          //}
+
+      });
+
+      var newerbody = newbody.replace(new RegExp('^.*\/\/\\s*toggle_start:\\s*?([^\\n]+)\\n?', 'gm'), '').replace(new RegExp('\/\/\\s*toggle_end\\s*\\n?', 'gm'), '');
+
+      if (body !== newerbody) {
+          grunt.log.writeln('Writing file to ' + destfile);
+          grunt.file.write(destfile, newbody);
+      }
     });
   });
 
