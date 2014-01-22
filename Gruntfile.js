@@ -35,8 +35,21 @@ module.exports = function(grunt) {
         unit: {
             configFile: 'test/config/karma.conf.js',
             singleRun: true
+        },
+        watch: {
+            configFile: 'src/test/config/karma.conf.js'
         }
     },
+
+    watch: {
+        js: {
+            files: ['test/**/*.js', 'tasks/**/*.js'],
+            tasks: ['test'],
+            options: {
+                livereload: true
+            }
+        }
+    },        
 
     // Configuration to be run (and then tested).
     toggles: {
@@ -50,6 +63,7 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-karma');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this

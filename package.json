@@ -27,10 +27,11 @@
     "test": "grunt test"
   },
   "devDependencies": {
+    "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-jasmine": "~0.2.0",
-    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
     "karma": "~0.11",
     "karma-jasmine": "~0.1",
     "grunt-karma": "~0.7.2",
