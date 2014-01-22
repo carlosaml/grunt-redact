@@ -12,15 +12,14 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+
     jshint: {
       all: [
         'Gruntfile.js',
         'lib/**/*.js',
         'tasks/**/*.js',
-
 //TODO: add Jasmine specs to JSHint as well
 //        'test/**/*.js'
-
       ],
       options: {
         jshintrc: '.jshintrc',
@@ -31,26 +30,20 @@ module.exports = function(grunt) {
     clean: {
       tests: ['tmp'],
     },
+    
+//    watch: {
+//        karma: {
+//            files: ['test/**/*.js', 'lib/**/*.js', 'tasks/**/*.js'],
+//            tasks: ['test'],
+//            options: {
+//                livereload: true
+//            }
+//        }
+//    },        
 
-    karma: {
-        unit: {
-            configFile: 'test/config/karma.conf.js',
-            singleRun: true
-        },
-        watch: {
-            configFile: 'src/test/config/karma.conf.js'
-        }
+    nodeunit: {
+        tests: ['test/*_test.js']
     },
-
-    watch: {
-        karma: {
-            files: ['test/**/*.js', 'lib/**/*.js', 'tasks/**/*.js'],
-            tasks: ['test'],
-            options: {
-                livereload: true
-            }
-        }
-    },        
 
     // Configuration to be run (and then tested).
     toggles: {
@@ -64,12 +57,12 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  //grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'jshint', 'toggles', 'karma:unit']);
+  grunt.registerTask('test', ['clean', 'jshint', 'toggles', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['test']);
