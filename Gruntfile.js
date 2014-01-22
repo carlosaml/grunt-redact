@@ -42,7 +42,7 @@ module.exports = function(grunt) {
     },
 
     watch: {
-        js: {
+        karma: {
             files: ['test/**/*.js', 'tasks/**/*.js'],
             tasks: ['test'],
             options: {
