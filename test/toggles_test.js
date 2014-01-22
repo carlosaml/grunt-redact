@@ -39,7 +39,6 @@ exports.toggles = {
     },
 
     should_register_itself_with_grunt: function(test) {
-
         should.exist(PurgeTogglesTask.registerWithGrunt);
 
         PurgeTogglesTask.registerWithGrunt(grunt);
@@ -49,4 +48,9 @@ exports.toggles = {
 
         test.done();
     },
+
+    should_copy_all_files_to_target_directory: function(test) {
+        test.done();
+    }
+    
 };
