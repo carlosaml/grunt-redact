@@ -31,15 +31,15 @@ module.exports = function(grunt) {
       tests: ['tmp'],
     },
     
-//    watch: {
-//        karma: {
-//            files: ['test/**/*.js', 'lib/**/*.js', 'tasks/**/*.js'],
-//            tasks: ['test'],
-//            options: {
-//                livereload: true
-//            }
-//        }
-//    },        
+    watch: {
+        nodeunit: {
+            files: ['lib/**/*.js', 'tasks/**/*.js', 'test/**/*.js'],
+            tasks: ['test'],
+            options: {
+                livereload: true
+            }
+        }
+    },        
 
     nodeunit: {
         tests: ['test/*_test.js']
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  //grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
