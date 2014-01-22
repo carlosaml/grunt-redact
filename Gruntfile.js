@@ -18,8 +18,7 @@ module.exports = function(grunt) {
         'Gruntfile.js',
         'lib/**/*.js',
         'tasks/**/*.js',
-//TODO: add Jasmine specs to JSHint as well
-//        'test/**/*.js'
+        'test/**/*.js'
       ],
       options: {
         jshintrc: '.jshintrc',

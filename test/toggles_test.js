@@ -1,7 +1,5 @@
 'use strict';
 
-var grunt = require('grunt');
-
 /*
   ======== A Handy Little Nodeunit Reference ========
   https://github.com/caolan/nodeunit
@@ -22,17 +20,33 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
+var grunt = require("grunt"),
+    should = require("should"),
+    _ = grunt.util._;
+ 
+var PurgeTogglesTask = require("../lib/purgeTogglesTask");
+
 exports.toggles = {
-  setUp: function(done) {
-    // setup here if necessary
-    done();
-  },
-  should_work: function(test) {
-    test.expect(1);
+    setUp: function(done) {
+        // setup here if necessary
+        done();
+    },
+    
+    should_work: function(test) {
+        test.expect(1);
+        test.equal(1, 1);
+        test.done();
+    },
 
-    test.equal(1, 1);
+    should_register_itself_with_grunt: function(test) {
 
-    test.done();
-  },
+        should.exist(PurgeTogglesTask.registerWithGrunt);
+
+        PurgeTogglesTask.registerWithGrunt(grunt);
+
+        should.exist(grunt.task._tasks[PurgeTogglesTask.taskName]);
+        grunt.task._tasks[PurgeTogglesTask.taskName].info.should.equal(PurgeTogglesTask.taskDescription);
+
+        test.done();
+    },
 };
-
