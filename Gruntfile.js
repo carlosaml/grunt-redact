@@ -15,6 +15,7 @@ module.exports = function(grunt) {
     jshint: {
       all: [
         'Gruntfile.js',
+        'lib/**/*.js',
         'tasks/**/*.js',
 
 //TODO: add Jasmine specs to JSHint as well
@@ -43,7 +44,7 @@ module.exports = function(grunt) {
 
     watch: {
         karma: {
-            files: ['test/**/*.js', 'tasks/**/*.js'],
+            files: ['test/**/*.js', 'lib/**/*.js', 'tasks/**/*.js'],
             tasks: ['test'],
             options: {
                 livereload: true
