@@ -1,14 +1,21 @@
 var toggles = require('../../tasks/lib/toggles.js');
 
 describe('toggles plugin', function () {
-    var grunt;
+    describe('when the toggles file does not exist', function () {
+        var file;
 
-    beforeEach(function () {
-        grunt = jasmine.createSpyObj('grunt', ['log']);
-    });
+        beforeEach(function () {
+            file = jasmine.createSpyObj('file', ['exists']);
+        });
 
-    it('should toggle states from the manifest file', function () {
-        toggles.run(grunt);
-        expect(grunt.log).toHaveBeenCalledWith('log');
+        it('should throw an error if the toggles.json file does not exist', function () {
+            file.exists.andReturn(false);
+            expect(function () {
+                toggles._configFileExists(file);
+            }).toThrow(new Error("Could not find a toggles.json file"));
+
+            expect(file.exists).toHaveBeenCalledWith('toggles.json');
+
+        });
     });
 });
