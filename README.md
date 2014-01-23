@@ -1,4 +1,4 @@
-# grunt-toggles
+# grunt-toggles [![Build Status](https://travis-ci.org/carlosaml/grunt-toggles.png?branch=master)](https://travis-ci.org/carlosaml/grunt-toggles)
 
 > Grunt plugin to support feature toggle removal so that hidden code is not shown to clients.
 
