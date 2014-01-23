@@ -1,6 +1,6 @@
 {
     "name": "grunt-toggles",
-    "description": "Pre-packaging feature toggle support for client-side JavaScript applications.",
+    "description": "Pre-packaging feature toggle support for static applications where toggle-related code can't be delivered to the client.",
     "version": "0.1.0",
     "homepage": "https://github.com/carlosaml/grunt-toggles",
     "author": {

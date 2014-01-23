@@ -1,6 +1,8 @@
 # grunt-toggles [![Build Status](https://travis-ci.org/carlosaml/grunt-toggles.png?branch=master)](https://travis-ci.org/carlosaml/grunt-toggles)
 
-> Pre-packaging feature toggle support for client-side JavaScript applications.
+> Pre-packaging feature toggle support for static applications where toggle-related code can't be delivered to the client.
+
+## Why?
 
 > Do you need feature toggle support for your client-side JavaScript app? Then you've come to the right place.
 
