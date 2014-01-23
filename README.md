@@ -2,7 +2,7 @@
 
 > Pre-packaging feature toggle support for client-side JavaScript applications.
 
-> Do you need feature toggle support for your client-side JavaScript app? You've come to the right place.
+> Do you need feature toggle support for your client-side JavaScript app? Then you've come to the right place.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
