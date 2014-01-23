@@ -42,7 +42,9 @@ grunt.initConfig({
 ### Options
 
 #### options.src
+
 Type: `String`
+
 Default value: `src/`
 
 The path where the source code is located.
