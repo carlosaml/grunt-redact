@@ -46,7 +46,7 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     toggles: {
-        options: { }
+        all: { }
     },
   });
 
