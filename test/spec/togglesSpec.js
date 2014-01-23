@@ -21,7 +21,7 @@ describe('toggles plugin', function () {
             file.exists.andReturn(false);
             expect(function () {
                 toggles._configFileExists(file);
-            }).toThrow(new Error("Could not find a toggles.json file"));
+            }).toThrow(new Error("Could not find the toggles.json file"));
 
             expect(file.exists).toHaveBeenCalledWith('toggles.json');
         });

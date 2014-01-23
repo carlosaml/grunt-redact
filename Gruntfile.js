@@ -26,13 +26,12 @@ module.exports = function (grunt) {
         },
 
         jasmine_node: {
-            projectRoot: "./test/spec",
+            projectRoot: "test/spec",
             forceExit: true
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-jasmine-node');
 
