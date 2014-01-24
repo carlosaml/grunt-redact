@@ -18,7 +18,7 @@ exports._redactHtmlFiles = function (fileSystem, redactor, workingDirectory, tog
     htmlFiles.forEach(function (file) {
         var body = fileSystem.read(file);
 
-        var redactedBody = redactor.redact(body, toggleConfig);
+        var redactedBody = redactor.redactHtml(body, toggleConfig);
 
         fileSystem.write(file, redactedBody);
     });

@@ -40,7 +40,7 @@ describe('toggles plugin', function () {
 
         beforeEach(function () {
             fileSystem = jasmine.createSpyObj('file', ['expand', 'read', 'write']);
-            redactor = jasmine.createSpyObj('redactor', ['redact']);
+            redactor = jasmine.createSpyObj('redactor', ['redactHtml']);
         });
 
         it('should redact HTML files in place', function () {
@@ -60,7 +60,7 @@ describe('toggles plugin', function () {
                 return null;
             });
 
-            redactor.redact.andCallFake(function (code) {
+            redactor.redactHtml.andCallFake(function (code) {
 
                 if (code === file1Original) {
                     return file1Redacted;
@@ -81,9 +81,9 @@ describe('toggles plugin', function () {
             expect(fileSystem.read).toHaveBeenCalledWith('src/main/file2.html');
             expect(fileSystem.read.callCount).toBe(2);
 
-            expect(redactor.redact).toHaveBeenCalledWith(file1Original, toggleConfig);
-            expect(redactor.redact).toHaveBeenCalledWith(file2Original, toggleConfig);
-            expect(redactor.redact.callCount).toBe(2);
+            expect(redactor.redactHtml).toHaveBeenCalledWith(file1Original, toggleConfig);
+            expect(redactor.redactHtml).toHaveBeenCalledWith(file2Original, toggleConfig);
+            expect(redactor.redactHtml.callCount).toBe(2);
 
             expect(fileSystem.write).toHaveBeenCalledWith('src/main/file1.html', 'file 1 REDACTED!');
             expect(fileSystem.write).toHaveBeenCalledWith('src/main/file2.html', 'file 2 REDACTED!');
