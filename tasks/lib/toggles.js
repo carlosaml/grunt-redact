@@ -1,51 +1,59 @@
 'use strict';
 
-var configFileName = 'toggles.json';
+exports._config = function () {
+    var file = this.file;
+    var configFileName = "toggles.json";
 
-exports._ensureConfigFileExists = function (fileSystem) {
-    if (!fileSystem.exists(configFileName)) {
-        throw new Error("Could not find the toggles.json file");
-    }
+    return {
+        verify: function () {
+            if (!file.exists(configFileName)) {
+                throw new Error("Could not find the toggles.json file");
+            }
+        },
+        read: function () {
+            return file.readJSON(configFileName);
+        }
+    };
 };
 
-exports._readToggleConfig = function (fileSystem) {
-    return fileSystem.readJSON(configFileName);
+exports._listFiles = function (pattern) {
+    return this.file.expandMapping(pattern, this.workingDirectory, {cwd: this.workingDirectory, filter: 'isFile'});
 };
 
-exports._redactHtmlFiles = function (fileSystem, redactor, workingDirectory, toggleConfig) {
-    var htmlFiles = fileSystem.expandMapping('**/*.html', workingDirectory, {cwd: workingDirectory, filter: 'isFile'});
+exports._readRedactWrite = function (filesToBeConverted, convert) {
+    var file = this.file;
+    var features = this.features;
 
-    htmlFiles.forEach(function (file) {
-        var filePath = file.dest;
-
-        var body = fileSystem.read(filePath);
-
-        var redactedBody = redactor.redactHtml(body, toggleConfig);
-
-        fileSystem.write(filePath, redactedBody);
+    filesToBeConverted.forEach(function (fileToBeConverted) {
+        var body = file.read(fileToBeConverted.dest);
+        file.write(fileToBeConverted.dest, convert(body, features));
     });
 };
 
-exports._redactJavaScriptFiles = function (fileSystem, redactor, workingDirectory, toggleConfig) {
-    var jsFiles = fileSystem.expandMapping('**/*.js', workingDirectory, {cwd: workingDirectory, filter: 'isFile'});
-
-    jsFiles.forEach(function (file) {
-        var filePath = file.dest;
-
-        var body = fileSystem.read(filePath);
-
-        var redactedBody = redactor.redactJavascript(body, toggleConfig);
-
-        fileSystem.write(filePath, redactedBody);
-    });
+exports._removeUnwantedFeaturesFrom = function () {
+    var that = this;
+    return {
+        html: function () {
+            that._readRedactWrite(that._listFiles('**/*.html'), that.redact.redactHtml);
+        },
+        javascript: function () {
+            that._readRedactWrite(that._listFiles('**/*.js'), that.redact.redactJavascript);
+        }
+    };
 };
 
 exports.run = function (grunt, redact) {
     //TODO: test this shit
     //TODO: get workingDirectory from options
+    //TODO: perhaps get file extensions from options
 
-    exports._ensureConfigFileExists(grunt.file);
-    var toggleConfig = exports._readToggleConfig(grunt.file);
-    exports._redactHtmlFiles(grunt.file, redact, 'target/main', toggleConfig);
-    exports._redactJavaScriptFiles(grunt.file, redact, 'target/main', toggleConfig);
+    this.file = grunt.file;
+    this.workingDirectory = 'target/main';
+    this.redact = redact;
+
+    exports._config().verify();
+    this.features = this._config().read();
+
+    exports._removeUnwantedFeaturesFrom().html();
+    exports._removeUnwantedFeaturesFrom().javascript();
 };
