@@ -29,7 +29,7 @@ describe('toggles plugin', function () {
         it('should return toggle config json', function () {
             var config = {my_feature: true};
             fileSystem.readJSON.andReturn(config);
-            expect(toggles._config(fileSystem)).toBe(config);
+            expect(toggles._readToggleConfig(fileSystem)).toBe(config);
             expect(fileSystem.readJSON).toHaveBeenCalledWith('toggles.json');
         });
     });
@@ -60,7 +60,7 @@ describe('toggles plugin', function () {
                 return null;
             });
 
-            redactor.redact.andCallFake(function(code){
+            redactor.redact.andCallFake(function (code) {
 
                 if (code === file1Original) {
                     return file1Redacted;

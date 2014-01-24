@@ -8,7 +8,7 @@ exports._ensureConfigFileExists = function (fileSystem) {
     }
 };
 
-exports._config = function (fileSystem) {
+exports._readToggleConfig = function (fileSystem) {
     return fileSystem.readJSON(configFileName);
 };
 
@@ -25,5 +25,10 @@ exports._redactHtmlFiles = function (fileSystem, redactor, workingDirectory, tog
 };
 
 exports.run = function (grunt) {
-    //exports._configFileExists(grunt.file);
+    //TODO: test this shit
+    //TODO: get workingDirectory from options
+
+//    exports._ensureConfigFileExists(grunt.file);
+//    var toggleConfig = exports._readToggleConfig(grunt.file);
+//    exports._redactHtmlFiles(grunt.file, function() {}, 'src/main', toggleConfig);
 };
