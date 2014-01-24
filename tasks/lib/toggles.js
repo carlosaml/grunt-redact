@@ -27,9 +27,9 @@ exports._redactHtmlFiles = function (fileSystem, redactor, workingDirectory, tog
 };
 
 exports._redactJavaScriptFiles = function (fileSystem, redactor, workingDirectory, toggleConfig) {
-    var htmlFiles = fileSystem.expandMapping('**/*.js', workingDirectory, {cwd: workingDirectory, filter: 'isFile'});
+    var jsFiles = fileSystem.expandMapping('**/*.js', workingDirectory, {cwd: workingDirectory, filter: 'isFile'});
 
-    htmlFiles.forEach(function (file) {
+    jsFiles.forEach(function (file) {
         var filePath = file.dest;
 
         var body = fileSystem.read(filePath);
