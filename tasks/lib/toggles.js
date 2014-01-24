@@ -13,22 +13,24 @@ exports._readToggleConfig = function (fileSystem) {
 };
 
 exports._redactHtmlFiles = function (fileSystem, redactor, workingDirectory, toggleConfig) {
-    var htmlFiles = fileSystem.expand({cwd: workingDirectory, filter: 'isFile'}, '**/*.html');
+    var htmlFiles = fileSystem.expandMapping('**/*.html', workingDirectory, {cwd: workingDirectory, filter: 'isFile'});
 
     htmlFiles.forEach(function (file) {
-        var body = fileSystem.read(file);
+        var filePath = file.dest;
+
+        var body = fileSystem.read(filePath);
 
         var redactedBody = redactor.redactHtml(body, toggleConfig);
 
-        fileSystem.write(file, redactedBody);
+        fileSystem.write(filePath, redactedBody);
     });
 };
 
-exports.run = function (grunt) {
+exports.run = function (grunt, redact) {
     //TODO: test this shit
     //TODO: get workingDirectory from options
 
-//    exports._ensureConfigFileExists(grunt.file);
-//    var toggleConfig = exports._readToggleConfig(grunt.file);
-//    exports._redactHtmlFiles(grunt.file, function() {}, 'src/main', toggleConfig);
+    exports._ensureConfigFileExists(grunt.file);
+    var toggleConfig = exports._readToggleConfig(grunt.file);
+    exports._redactHtmlFiles(grunt.file, redact, 'target/main', toggleConfig);
 };
