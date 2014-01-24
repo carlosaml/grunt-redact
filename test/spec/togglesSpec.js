@@ -10,7 +10,7 @@ describe('toggles plugin', function () {
         }}};
     });
 
-    describe('when the toggles file is read', function () {
+    describe('when reading the toggles config file', function () {
         var fileSystem;
 
         beforeEach(function () {
@@ -26,7 +26,7 @@ describe('toggles plugin', function () {
             expect(fileSystem.exists).toHaveBeenCalledWith('toggles.json');
         });
 
-        it('should return toggle config json', function () {
+        it('should return toggle config in JSON format', function () {
             var config = {my_feature: true};
             fileSystem.readJSON.andReturn(config);
             expect(toggles._readToggleConfig(fileSystem)).toBe(config);
@@ -34,20 +34,20 @@ describe('toggles plugin', function () {
         });
     });
 
-    describe('when redacted', function () {
+    describe('when it redacts', function () {
         var fileSystem;
         var redactor;
 
         beforeEach(function () {
             fileSystem = jasmine.createSpyObj('file', ['expandMapping', 'read', 'write']);
-            redactor = jasmine.createSpyObj('redactor', ['redactHtml']);
+            redactor = jasmine.createSpyObj('redactor', ['redactHtml', 'redactJavascript']);
         });
 
         it('should redact HTML files in place', function () {
             var file1Original = '<html>File 1</html>';
             var file2Original = '<html>File 2</html>';
-            var file1Redacted = 'file 1 REDACTED!';
-            var file2Redacted = 'file 2 REDACTED!';
+            var file1Redacted = '<html>File 1 REDACTED!</html>';
+            var file2Redacted = '<html>File 2 REDACTED!</html>';
 
             fileSystem.expandMapping.andReturn([
                 {src: 'src/main/file1.html', dest: 'src/main/file1.html'},
@@ -64,7 +64,6 @@ describe('toggles plugin', function () {
             });
 
             redactor.redactHtml.andCallFake(function (code) {
-
                 if (code === file1Original) {
                     return file1Redacted;
                 }
@@ -88,9 +87,59 @@ describe('toggles plugin', function () {
             expect(redactor.redactHtml).toHaveBeenCalledWith(file2Original, toggleConfig);
             expect(redactor.redactHtml.callCount).toBe(2);
 
-            expect(fileSystem.write).toHaveBeenCalledWith('src/main/file1.html', 'file 1 REDACTED!');
-            expect(fileSystem.write).toHaveBeenCalledWith('src/main/file2.html', 'file 2 REDACTED!');
+            expect(fileSystem.write).toHaveBeenCalledWith('src/main/file1.html', file1Redacted);
+            expect(fileSystem.write).toHaveBeenCalledWith('src/main/file2.html', file2Redacted);
             expect(fileSystem.write.callCount).toBe(2);
         });
+
+        it('should redact JavaScript files in place', function () {
+            var file1Original = 'if (featured.firstFeature) { doStuff(); }';
+            var file2Original = 'if (featured.secondFeature) { doStuff(); }';
+            var file1Redacted = '// File 1 REDACTED!';
+            var file2Redacted = '// File 2 REDACTED!';
+
+            fileSystem.expandMapping.andReturn([
+                {src: 'src/main/file1.js', dest: 'src/main/file1.js'},
+                {src: 'src/main/file2.js', dest: 'src/main/file2.js'}
+            ]);
+            fileSystem.read.andCallFake(function (fileName) {
+                if (fileName === 'src/main/file1.js') {
+                    return file1Original;
+                }
+                if (fileName === 'src/main/file2.js') {
+                    return file2Original;
+                }
+                return null;
+            });
+
+            redactor.redactJavascript.andCallFake(function (code) {
+                if (code === file1Original) {
+                    return file1Redacted;
+                }
+                if (code === file2Original) {
+                    return file2Redacted;
+                }
+                return null;
+            });
+
+            var toggleConfig = {myFeature: true};
+
+            toggles._redactJavaScriptFiles(fileSystem, redactor, 'src/main', toggleConfig);
+
+            expect(fileSystem.expandMapping).toHaveBeenCalledWith('**/*.js', 'src/main', {cwd: 'src/main', filter: "isFile"});
+
+            expect(fileSystem.read).toHaveBeenCalledWith('src/main/file1.js');
+            expect(fileSystem.read).toHaveBeenCalledWith('src/main/file2.js');
+            expect(fileSystem.read.callCount).toBe(2);
+
+            expect(redactor.redactJavascript).toHaveBeenCalledWith(file1Original, toggleConfig);
+            expect(redactor.redactJavascript).toHaveBeenCalledWith(file2Original, toggleConfig);
+            expect(redactor.redactJavascript.callCount).toBe(2);
+
+            expect(fileSystem.write).toHaveBeenCalledWith('src/main/file1.js', file1Redacted);
+            expect(fileSystem.write).toHaveBeenCalledWith('src/main/file2.js', file2Redacted);
+            expect(fileSystem.write.callCount).toBe(2);
+        });
+
     });
 });
