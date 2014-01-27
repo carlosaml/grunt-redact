@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "redact": "~0.0.2"
-  }
+  },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.6.0",
