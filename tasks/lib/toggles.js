@@ -42,13 +42,13 @@ exports._removeUnwantedFeaturesFrom = function () {
   };
 };
 
+//TODO: test this shit
 exports.run = function (grunt, redact) {
-  //TODO: test this shit
-  //TODO: get workingDirectory from options
-  //TODO: perhaps get file extensions from options
 
   this.file = grunt.file;
-  this.workingDirectory = 'target/main';
+
+  //TODO: get workingDirectory from options
+  this.workingDirectory = './test/spec/functional/tmp';
   this.redact = redact;
 
   exports._config().verify();

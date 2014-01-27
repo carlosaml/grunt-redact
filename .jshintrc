@@ -1,22 +1,23 @@
 {
-    "curly": true,
-    "eqeqeq": true,
-    "immed": true,
-    "latedef": true,
-    "newcap": true,
-    "noarg": true,
-    "sub": true,
-    "undef": true,
-    "boss": true,
-    "eqnull": true,
-    "node": true,
-    "globals": {
-        "describe": true,
-        "it": true,
-        "xit": true,
-        "expect": true,
-        "spyOn": true,
-        "beforeEach": true,
-        "jasmine": true
-    }
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "boss": true,
+  "eqnull": true,
+  "node": true,
+  "globals": {
+    "describe": true,
+    "it": true,
+    "xit": true,
+    "expect": true,
+    "spyOn": true,
+    "beforeEach": true,
+    "jasmine": true,
+    "feature": true
+  }
 }
