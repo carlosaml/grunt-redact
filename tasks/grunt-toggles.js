@@ -4,7 +4,7 @@ var toggles = require("./lib/toggles.js");
 var redact = require('redact');
 
 module.exports = function (grunt) {
-  grunt.registerMultiTask('toggles', 'Does stuff related to toggles', function () {
+  grunt.registerMultiTask('toggles', "Pre-packaging feature toggle support for static applications where toggle-related code can't be delivered to the client.", function () {
     toggles.run.call(this, grunt, redact);
   });
 };
