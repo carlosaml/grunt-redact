@@ -2,41 +2,41 @@
 
 module.exports = function (grunt) {
 
-    grunt.initConfig({
+  grunt.initConfig({
 
-        jshint: {
-            all: [
-                'Gruntfile.js',
-                'tasks/**/*.js',
-                'test/**/*.js'
-            ],
-            options: {
-                jshintrc: '.jshintrc'
-            }
-        },
+    jshint: {
+      all: [
+        'Gruntfile.js',
+        'tasks/**/*.js',
+        'test/**/*.js'
+      ],
+      options: {
+        jshintrc: '.jshintrc'
+      }
+    },
 
-        watch: {
-            jasmine: {
-                files: ['tasks/**/*.js', 'test/**/*.js'],
-                tasks: ['test'],
-                options: {
-                    livereload: true
-                }
-            }
-        },
-
-        jasmine_node: {
-            projectRoot: "test/spec",
-            forceExit: true
+    watch: {
+      jasmine: {
+        files: ['tasks/**/*.js', 'test/**/*.js'],
+        tasks: ['test'],
+        options: {
+          livereload: true
         }
-    });
+      }
+    },
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-jasmine-node');
+    jasmine_node: {
+      projectRoot: "test/spec",
+      forceExit: true
+    }
+  });
 
-    grunt.registerTask('test', ['jshint', 'jasmine_node']);
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-jasmine-node');
 
-    grunt.registerTask('default', ['test']);
+  grunt.registerTask('test', ['jshint', 'jasmine_node']);
+
+  grunt.registerTask('default', ['test']);
 
 };
