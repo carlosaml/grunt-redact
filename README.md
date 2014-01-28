@@ -45,7 +45,25 @@ grunt.initConfig({
 });
 ```
 
-The task will redact JavaScript and HTML files inside the directory specified on `workingDirectory` according to the following
+The task will redact JavaScript (**/*.js) and HTML (**/*.html) files inside the directory specified on `workingDirectory`.
+
+#### HTML files
+
+```html
+<span feature="facebookLogin">Facebook login goes here</span>
+<span not-feature="facebookLogin">Sorry, we do not support Facebook login yet</span>
+```
+
+#### JavaScript files
+
+```js
+if (feature.facebookLogin) {
+  console.log('WE HAZ FACEBOOK LOGIN');
+}
+if (!feature.facebookLogin) {
+  console.log('NO FACEBOOK LOGIN FOR YA');
+}
+```
 
 ### Options
 
@@ -53,7 +71,9 @@ The task will redact JavaScript and HTML files inside the directory specified on
 
 Type: `String`
 
-Location of files to be redacted. It will usually be the directory where you run your application when using `grunt server`.
+Location of files to be redacted. For example, it can be the path where you run your application when using `grunt server`.
+
+**Note:** this **should not** be your source code folder, since files are edited in place—it should be a target folder from where you run your app. 
 
 #### toggleStatesFile
 
