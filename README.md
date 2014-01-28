@@ -5,12 +5,12 @@
 <img align="right" height="280" src="http://carlosaml.github.io/grunt-redact.png">
 
 ### What's this?
-
 Pre-runtime feature toggle support for static applications where toggle-related code can't be delivered to the client.
 
-### Why?
-
 Do you need pre-runtime feature toggle support for your client-side JavaScript app? Then you've come to the right place.
+
+### Why?
+In most scenarios client-side feature toggling is enough and you can get away with simple toggling mechanisms in your client-side app. However, in scenarios where clients simply cannot have any access to half-baked or hidden features, you need something that will remove all traces that there was ever any feature toggle in your codebase.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
@@ -45,32 +45,52 @@ grunt.initConfig({
 });
 ```
 
+The task will redact JavaScript and HTML files inside the directory specified on `workingDirectory` according to the following
+
 ### Options
 
-#### options.src
+#### workingDirectory
 
 Type: `String`
 
-Default value: `src/`
+Location of files to be redacted. It will usually be the directory where you run your application when using `grunt server`.
 
-The path where the source code is located.
+#### toggleStatesFile
+
+Type: `String`
+
+Location of the JSON file that contains your feature toggles and their respective states.
+
+The file should contain a simple JavaScript object with the feature names and their respective states. For example:
+
+```js
+{
+  "googleLogin": true,
+  "facebookLogin": false
+}
+```
 
 ### Usage Examples
+
+On your Grunfile.js:
 
 ```js
 grunt.initConfig({
   redact: {
     options: {
-      something: "yes please"
+      workingDirectory: "target/"
     },
-    some_target: {
+    jasmine: {
       options: {
-        something: "no way"
+        toggleStatesFile: "spec/toggleStatesForSpecs.json",
+        workingDirectory: "target/jasmine/"
+      }
+    },
+    watch: {
+      options: {
+        toggleStatesFile: "target/devToggleStates.json"
       }
     }
   },
 });
 ```
-
-## Release History
-_(Nothing yet)_
