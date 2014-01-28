@@ -60,9 +60,6 @@ The task will redact JavaScript (**/*.js) and HTML (**/*.html) files inside the 
 if (feature.facebookLogin) {
   console.log('WE HAZ FACEBOOK LOGIN');
 }
-if (!feature.facebookLogin) {
-  console.log('NO FACEBOOK LOGIN FOR YA');
-}
 ```
 
 ### Options
