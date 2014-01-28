@@ -1,7 +1,7 @@
 {
   "name": "grunt-toggles",
   "description": "Pre-packaging feature toggle support for static applications where toggle-related code can't be delivered to the client.",
-  "version": "0.0.1a",
+  "version": "0.0.1",
   "homepage": "https://github.com/carlosaml/grunt-toggles",
   "author": {
     "name": "Carlos Lopes",
@@ -27,7 +27,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "redact": "~0.0.3"
+    "redact": "~0.0.6"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
