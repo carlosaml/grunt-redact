@@ -45,7 +45,7 @@ grunt.initConfig({
 });
 ```
 
-The task will redact JavaScript (**/*.js) and HTML (**/*.html) files inside the directory specified on `workingDirectory`.
+The task will redact JavaScript (\*\*/\*.js) and HTML (\*\*/\*.html) files inside the directory specified on `workingDirectory`.
 
 #### HTML files
 
