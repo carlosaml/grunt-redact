@@ -89,7 +89,7 @@ The file should contain a simple JavaScript object with the feature names and th
 
 ### Usage Examples
 
-On your Grunfile.js:
+On your Gruntfile.js:
 
 ```js
 grunt.initConfig({
