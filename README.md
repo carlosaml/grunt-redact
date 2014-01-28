@@ -1,14 +1,16 @@
-# grunt-redact [![Build Status](https://travis-ci.org/carlosaml/grunt-redact.png?branch=master)](https://travis-ci.org/carlosaml/grunt-redact)
+# grunt-redact
+
+[![Build Status](https://travis-ci.org/carlosaml/grunt-redact.png?branch=master)](https://travis-ci.org/carlosaml/grunt-redact)
 
 <img align="right" height="150" src="http://carlosaml.github.io/grunt-redact.png">
 
-> 
-> Pre-runtime feature toggle support for static applications where toggle-related code can't be delivered to the client.
-> 
+### What's this?
 
-## Why?
+Pre-runtime feature toggle support for static applications where toggle-related code can't be delivered to the client.
 
-> Do you need pre-runtime feature toggle support for your client-side JavaScript app? Then you've come to the right place.
+### Why?
+
+Do you need pre-runtime feature toggle support for your client-side JavaScript app? Then you've come to the right place.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
