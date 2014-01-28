@@ -1,6 +1,6 @@
 # grunt-redact
 
-[![Build Status](https://secure.travis-ci.org/carlosaml/grunt-redact.png?branch=master)](https://travis-ci.org/carlosaml/grunt-redact)
+[![Build Status](https://secure.travis-ci.org/carlosaml/grunt-redact.png?branch=master)](https://travis-ci.org/carlosaml/grunt-redact) [![Dependency Status](https://david-dm.org/carlosaml/grunt-redact.png)](https://david-dm.org/carlosaml/grunt-redact)
 
 <img align="right" height="280" src="http://carlosaml.github.io/grunt-redact.png">
 
