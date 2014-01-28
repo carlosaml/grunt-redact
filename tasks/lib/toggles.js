@@ -2,16 +2,16 @@
 
 exports._config = function () {
   var file = this.file;
-  var configFileName = "toggles.json";
+  var toggleStatesFileName = this.toggleStatesFileName;
 
   return {
     verify: function () {
-      if (!file.exists(configFileName)) {
-        throw new Error("Could not find the toggles.json file");
+      if (!file.exists(toggleStatesFileName)) {
+        throw new Error("Could not find the toggle states file");
       }
     },
     read: function () {
-      return file.readJSON(configFileName);
+      return file.readJSON(toggleStatesFileName);
     }
   };
 };
@@ -42,14 +42,12 @@ exports._removeUnwantedFeaturesFrom = function () {
   };
 };
 
-//TODO: test this shit
-exports.run = function (grunt, redact) {
-
+exports.run = function (grunt, redact, options) {
   this.file = grunt.file;
-
-  //TODO: get workingDirectory from options
-  this.workingDirectory = './test/spec/functional/tmp';
   this.redact = redact;
+
+  this.workingDirectory = options['workingDirectory'];
+  this.toggleStatesFileName = options['toggleStatesFile'];
 
   exports._config().verify();
   this.features = this._config().read();

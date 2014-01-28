@@ -12,6 +12,7 @@ describe('toggles plugin', function () {
 
   describe('when reading the toggles config file', function () {
     beforeEach(function () {
+      toggles.toggleStatesFileName = 'myBeautifulToggles.json';
       toggles.file = jasmine.createSpyObj('file', ['exists', 'readJSON']);
     });
 
@@ -19,16 +20,16 @@ describe('toggles plugin', function () {
       toggles.file.exists.andReturn(false);
       expect(function () {
         toggles._config().verify();
-      }).toThrow(new Error("Could not find the toggles.json file"));
+      }).toThrow(new Error("Could not find the toggle states file"));
 
-      expect(toggles.file.exists).toHaveBeenCalledWith('toggles.json');
+      expect(toggles.file.exists).toHaveBeenCalledWith('myBeautifulToggles.json');
     });
 
     it('should return toggle config in JSON format', function () {
       var config = {my_feature: true};
       toggles.file.readJSON.andReturn(config);
       expect(toggles._config().read()).toBe(config);
-      expect(toggles.file.readJSON).toHaveBeenCalledWith('toggles.json');
+      expect(toggles.file.readJSON).toHaveBeenCalledWith('myBeautifulToggles.json');
     });
   });
 
@@ -45,7 +46,6 @@ describe('toggles plugin', function () {
       expect(files).toBe(expected);
       expect(toggles.file.expandMapping).toHaveBeenCalledWith('pattern', 'dir', {cwd: 'dir', filter: 'isFile'});
     });
-
   });
 
   describe('when files are to be redacted', function () {

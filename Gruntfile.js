@@ -45,7 +45,8 @@ module.exports = function (grunt) {
     toggles: {
       jasmine_node: {
         options: {
-          workingDirectory: 'test/spec/functional/tmp'
+          workingDirectory: 'test/spec/functional/tmp',
+          toggleStatesFile: 'test/spec/functional/toggleStates.json'
         }
       }
     }
