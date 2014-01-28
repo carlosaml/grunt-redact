@@ -70,7 +70,7 @@ Type: `String`
 
 Location of files to be redacted. For example, it can be the path where you run your application when using `grunt server`.
 
-**Note:** this **should not** be your source code folder, since files are edited in place—it should be a target folder from where you run your app. 
+**Note:** this should **_not_** be your source code folder, since files are edited in place—it should be a target folder from where you run your app, where file contents are disposable (and most likely ignored by your source control tool.) 
 
 #### toggleStatesFile
 
