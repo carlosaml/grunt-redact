@@ -2,16 +2,16 @@
 
 exports._config = function () {
   var file = this.file;
-  var toggleStatesFileName = this.toggleStatesFileName;
+  var toggleStatesFilePath = this.toggleStatesFileName;
 
   return {
     verify: function () {
-      if (!file.exists(toggleStatesFileName)) {
-        throw new Error("Could not find the toggle states file");
+      if (!file.exists(toggleStatesFilePath)) {
+        throw new Error("Could not find the toggle states file at " + toggleStatesFilePath);
       }
     },
     read: function () {
-      return file.readJSON(toggleStatesFileName);
+      return file.readJSON(toggleStatesFilePath);
     }
   };
 };

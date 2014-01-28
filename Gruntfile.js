@@ -42,7 +42,7 @@ module.exports = function (grunt) {
       }
     },
 
-    toggles: {
+    redact: {
       jasmine_node: {
         options: {
           workingDirectory: 'test/spec/functional/tmp',
@@ -60,7 +60,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-jasmine-node');
 
-  grunt.registerTask('test', ['clean', 'copy', 'jshint', 'toggles', 'jasmine_node']);
+  grunt.registerTask('test', ['clean', 'copy', 'jshint', 'redact', 'jasmine_node']);
 
   grunt.registerTask('default', ['test']);
 

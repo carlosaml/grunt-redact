@@ -1,10 +1,10 @@
-# grunt-toggles [![Build Status](https://travis-ci.org/carlosaml/grunt-toggles.png?branch=master)](https://travis-ci.org/carlosaml/grunt-toggles)
+# grunt-redact [![Build Status](https://travis-ci.org/carlosaml/grunt-redact.png?branch=master)](https://travis-ci.org/carlosaml/grunt-redact)
 
-> Pre-packaging feature toggle support for static applications where toggle-related code can't be delivered to the client.
+> Pre-runtime feature toggle support for static applications where toggle-related code can't be delivered to the client.
 
 ## Why?
 
-> Do you need feature toggle support for your client-side JavaScript app? Then you've come to the right place.
+> Do you need pre-runtime feature toggle support for your client-side JavaScript app? Then you've come to the right place.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
@@ -12,23 +12,23 @@ This plugin requires Grunt `~0.4.2`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-toggles --save-dev
+npm install grunt-redact --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-toggles');
+grunt.loadNpmTasks('grunt-redact');
 ```
 
-## The "toggles" task
+## The "redact" task
 
 ### Overview
-In your project's Gruntfile, add a section named `toggles` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `redact` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  toggles: {
+  redact: {
     options: {
       // Task-specific options go here.
     },
@@ -53,7 +53,7 @@ The path where the source code is located.
 
 ```js
 grunt.initConfig({
-  toggles: {
+  redact: {
     options: {
       something: "yes please"
     },
