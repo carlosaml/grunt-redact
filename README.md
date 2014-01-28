@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/carlosaml/grunt-redact.png?branch=master)](https://travis-ci.org/carlosaml/grunt-redact)
 
-<img align="right" height="150" src="http://carlosaml.github.io/grunt-redact.png">
+<img align="right" height="280" src="http://carlosaml.github.io/grunt-redact.png">
 
 ### What's this?
 
