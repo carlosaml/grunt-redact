@@ -27,7 +27,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "redact": "~0.0.6"
+    "redact": "~0.0.8"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
