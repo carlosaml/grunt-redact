@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/carlosaml/grunt-redact.png?branch=master)](https://travis-ci.org/carlosaml/grunt-redact) [![Dependency Status](https://david-dm.org/carlosaml/grunt-redact.png)](https://david-dm.org/carlosaml/grunt-redact)
 
-<img align="right" height="280" src="http://carlosaml.github.io/grunt-redact-2.png">
+<img align="right" height="280" src="http://carlosaml.github.io/grunt-redact-1.png">
 
 ### What's this?
 Pre-runtime feature toggle support for static applications where toggle-related code can't be delivered to the client.
