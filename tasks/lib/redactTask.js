@@ -10,14 +10,14 @@ exports._config = function () {
 
   return {
     verify: function () {
-      if (!file.exists(toggleStatesFilePath) && _.isEmpty(toggleStates)) {
+      if ((_.isEmpty(toggleStatesFilePath) || !file.exists(toggleStatesFilePath)) && _.isEmpty(toggleStates)) {
         throw new Error("Could not find the toggle states file at " + toggleStatesFilePath + " and no inline toggle states are defined");
       }
       return true;
     },
     read: function () {
       var fromFile = {};
-      if (file.exists(toggleStatesFilePath)) {
+      if (!_.isEmpty(toggleStatesFilePath) && file.exists(toggleStatesFilePath)) {
           fromFile = file.readJSON(toggleStatesFilePath);
       }
       var merged = _.merge(fromFile, toggleStates);
