@@ -1,17 +1,32 @@
 'use strict';
 
+var _ = require("lodash");
+
 exports._config = function () {
   var file = this.file;
   var toggleStatesFilePath = this.toggleStatesFileName;
+  var toggleStates = this.toggleStates || {};
+  var everythingOn = this.everythingOn || false;
 
   return {
     verify: function () {
-      if (!file.exists(toggleStatesFilePath)) {
-        throw new Error("Could not find the toggle states file at " + toggleStatesFilePath);
+      if (!file.exists(toggleStatesFilePath) && _.isEmpty(toggleStates)) {
+        throw new Error("Could not find the toggle states file at " + toggleStatesFilePath + " and no inline toggle states are defined");
       }
+      return true;
     },
     read: function () {
-      return file.readJSON(toggleStatesFilePath);
+      var fromFile = {};
+      if (file.exists(toggleStatesFilePath)) {
+          fromFile = file.readJSON(toggleStatesFilePath);
+      }
+      var merged = _.merge(fromFile, toggleStates);
+
+      if (everythingOn) {
+          return _.mapValues(merged, function (value) { console.log(value); return true; });
+      }
+
+      return merged;
     }
   };
 };
@@ -48,6 +63,8 @@ exports.run = function (grunt, redact, options) {
 
   this.workingDirectory = options['workingDirectory'];
   this.toggleStatesFileName = options['toggleStatesFile'];
+  this.toggleStates = options['toggleStates'];
+  this.everythingOn = options['everythingOn'];
 
   exports._config().verify();
   this.features = this._config().read();

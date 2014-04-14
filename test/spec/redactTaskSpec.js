@@ -10,26 +10,64 @@ describe('grunt-redact plugin', function () {
     }}};
   });
 
-  describe('when reading the toggle states file', function () {
+  describe('when reading toggle states', function () {
     beforeEach(function () {
+      redactTask.everythingOn = undefined;
+      redactTask.toggleStates = undefined;
       redactTask.toggleStatesFileName = 'path/to/myBeautifulToggles.json';
+
       redactTask.file = jasmine.createSpyObj('file', ['exists', 'readJSON']);
     });
 
-    it('should throw an error if the toggle states file does not exist', function () {
+    it('should throw an error if the toggle states file does not exist and no toggles are defined in task the configuration', function () {
       redactTask.file.exists.andReturn(false);
+      redactTask.toggleStates = undefined;
+
       expect(function () {
         redactTask._config().verify();
-      }).toThrow(new Error("Could not find the toggle states file at path/to/myBeautifulToggles.json"));
+      }).toThrow(new Error("Could not find the toggle states file at path/to/myBeautifulToggles.json and no inline toggle states are defined"));
 
       expect(redactTask.file.exists).toHaveBeenCalledWith('path/to/myBeautifulToggles.json');
     });
 
-    it('should return toggle config in JSON format', function () {
+    it('should not complain about the absence of the external file if inline toggles are defined', function () {
+      redactTask.file.exists.andReturn(false);
+      redactTask.toggleStates = { someToggle: false };
+
+      expect(redactTask._config().verify()).toBeTruthy();
+      expect(redactTask.file.exists).toHaveBeenCalledWith('path/to/myBeautifulToggles.json');
+    });
+
+    it('should return toggle config from external file in JSON format', function () {
       var config = {my_feature: true};
+      redactTask.file.exists.andReturn(true);
       redactTask.file.readJSON.andReturn(config);
       expect(redactTask._config().read()).toBe(config);
       expect(redactTask.file.readJSON).toHaveBeenCalledWith('path/to/myBeautifulToggles.json');
+    });
+
+    it('should return toggle config from inline definitions in JSON format', function () {
+      redactTask.toggleStates = { blablabla: true };
+      redactTask.file.exists.andReturn(false);
+      expect(redactTask._config().read()).toEqual({ blablabla: true });
+      expect(redactTask.file.readJSON).not.toHaveBeenCalled();
+    });
+
+    it('should override states specified in file if they are also defined inline', function () {
+      redactTask.file.exists.andReturn(true);
+      redactTask.file.readJSON.andReturn({ blablabla: true });
+      redactTask.toggleStates = {blablabla: false};
+
+      expect(redactTask._config().read()).toEqual({ blablabla: false });
+    });
+
+    it('should set all toggles to true if everythingOn is set', function() {
+      redactTask.everythingOn = true;
+      redactTask.toggleStates = { someToggle: false };
+      redactTask.file.exists.andReturn(true);
+      redactTask.file.readJSON.andReturn({ blablabla: false });
+
+      expect(redactTask._config().read()).toEqual({ blablabla: true, someToggle: true });
     });
   });
 
