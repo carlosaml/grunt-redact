@@ -1,7 +1,7 @@
 {
   "name": "grunt-redact",
   "description": "Pre-packaging feature toggle support for static applications where toggle-related code can't be delivered to the client.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/carlosaml/grunt-redact",
   "author": {
     "name": "Carlos Lopes",
