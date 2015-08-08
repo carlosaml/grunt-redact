@@ -18,12 +18,15 @@ exports._config = function () {
     read: function () {
       var fromFile = {};
       if (!_.isEmpty(toggleStatesFilePath) && file.exists(toggleStatesFilePath)) {
-          fromFile = file.readJSON(toggleStatesFilePath);
+        fromFile = file.readJSON(toggleStatesFilePath);
       }
       var merged = _.merge(fromFile, toggleStates);
 
       if (everythingOn) {
-          return _.mapValues(merged, function (value) { console.log(value); return true; });
+        return _.mapValues(merged, function (value) {
+          console.log(value);
+          return true;
+        });
       }
 
       return merged;
@@ -48,11 +51,11 @@ exports._readRedactWrite = function (filesToBeConverted, convert) {
 exports._removeUnwantedFeaturesFrom = function () {
   var that = this;
   return {
-    html: function () {
-      that._readRedactWrite(that._listFiles('**/*.html'), that.redact.redactHtml);
+    html: function (patterns) {
+      that._readRedactWrite(that._listFiles(patterns || '**/*.html'), that.redact.redactHtml);
     },
-    javascript: function () {
-      that._readRedactWrite(that._listFiles('**/*.js'), that.redact.redactJavascript);
+    javascript: function (patterns) {
+      that._readRedactWrite(that._listFiles(patterns || '**/*.js'), that.redact.redactJavascript);
     }
   };
 };
@@ -63,12 +66,14 @@ exports.run = function (grunt, redact, options) {
 
   this.workingDirectory = options['workingDirectory'];
   this.toggleStatesFileName = options['toggleStatesFile'];
+  this.js_patterns = options['jsPatterns'];
+  this.html_patterns = options['htmlPatterns'];
   this.toggleStates = options['toggleStates'];
   this.everythingOn = options['everythingOn'];
 
   exports._config().verify();
   this.features = this._config().read();
 
-  exports._removeUnwantedFeaturesFrom().html();
-  exports._removeUnwantedFeaturesFrom().javascript();
+  exports._removeUnwantedFeaturesFrom().html(this.html_patterns);
+  exports._removeUnwantedFeaturesFrom().javascript(this.js_patterns);
 };
